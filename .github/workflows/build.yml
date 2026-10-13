@@ -38,20 +38,16 @@ jobs:
         with:
           packages: ''
 
-      - name: Setup Flutter SDK
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.27.4'
-          channel: 'stable'
-          cache: true
-
       - name: Build Android APK with Flet
-        run: |
-          flet build apk
+        id: build
+        uses: flet-dev/flet-build-action@v1
+        with:
+          target: apk
+          build-number: ${{ github.run_number }}
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: planificador-yaan-apk
-          path: build/apk/*.apk
-          
+          path: ${{ steps.build.outputs.archive-path }}
+          if-no-files-found: error
