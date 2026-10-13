@@ -380,4 +380,4 @@ def main(page: ft.Page):
 if __name__ == "__main__":
     from flet import app as flet_app
 
-    flet_app(target=main)
+    flet_app(target=main) # type: ignore[misc]
